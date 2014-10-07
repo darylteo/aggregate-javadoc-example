@@ -1,0 +1,17 @@
+task docs(type: Javadoc) {
+	destinationDir = file("$buildDir/docs/all")
+}
+
+subprojects {
+	afterEvaluate {
+		if(plugins.hasPlugin(JavaPlugin)) {
+			
+			// configuration here
+			rootProject.tasks.docs {
+				source += files(sourceSets.collect { srcSet -> srcSet.allJava })
+				classpath += files(sourceSets*.compileClasspath)
+			}
+
+		}
+	}
+}
